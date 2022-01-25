@@ -1,0 +1,362 @@
+<section class="container-register container-layout">
+  <div class="wrapper-header">
+    <h2 class="wrapper-header__title">Criar seu cadastro</h2>
+    <p class="wrapper-header__info">
+      <span class="span-required">*</span>
+      Campos obrigatórios
+    </p>
+  </div>
+
+  <form [formGroup]="registrationForm" (ngSubmit)="onSubmit()">
+    <h3 class="form-title">Informações Pessoais</h3>
+
+    <section class="form-user">
+      <div class="form-user__wrapper">
+        <span class="span-required">*</span>
+        <label for="firstName" class="form-label">Nome</label>
+      </div>
+
+      <input
+        type="text"
+        formControlName="firstName"
+        id="firstName"
+        name="firstName"
+        class="form-input form-input--big"
+        [class.form-input--error]="validationForm('firstName')"
+        [class.form-input--success]="correctValidField('firstName')"
+      />
+
+      <span *ngIf="validationForm('firstName')" class="invalid-feedback">
+        Por favor, informe o Nome
+      </span>
+
+      <div class="form-user__wrapper">
+        <span class="span-required">*</span>
+        <label for="lastName" class="form-label">Sobrenome</label>
+      </div>
+
+      <input
+        type="text"
+        formControlName="lastName"
+        id="lastName"
+        name="lastName"
+        class="form-input form-input--big"
+        [class.form-input--error]="validationForm('lastName')"
+        [class.form-input--success]="correctValidField('lastName')"
+      />
+
+      <span *ngIf="validationForm('lastName')" class="invalid-feedback">
+        Por favor, informe o Sobrenome
+      </span>
+    </section>
+
+    <section class="form-user">
+      <div class="form-user__wrapper">
+        <span class="span-required">*</span>
+        <label for="birthDate" class="form-label">Data de nascimento</label>
+      </div>
+
+      <input
+        type="text"
+        name="birthDate"
+        id="birthDate"
+        placeholder="__/__/____"
+        formControlName="birthDate"
+        mask="00/00/0000"
+        class="form-input form-input--medium"
+        [class.form-input--error]="validationForm('birthDate')"
+        [class.form-input--success]="correctValidField('birthDate')"
+      />
+
+      <span *ngIf="validationForm('birthDate')" class="invalid-feedback">
+        É necessário informar a Data de Nascimento.
+      </span>
+
+      <div class="form-user__wrapper">
+        <span class="span-required">*</span>
+        <label for="phone" class="form-label">Telefone</label>
+      </div>
+
+      <input
+        type="text"
+        name="phone"
+        id="phone"
+        placeholder="(__) _____-____"
+        formControlName="phone"
+        mask="(00) 0 0000-0000"
+        class="form-input form-input--medium"
+        [class.form-input--error]="validationForm('phone')"
+        [class.form-input--success]="correctValidField('phone')"
+      />
+
+      <span *ngIf="validationForm('phone')" class="invalid-feedback">
+        É necessário informar o número do Telefone principal.
+      </span>
+
+      <div class="form-user__wrapper">
+        <label for="gender" class="form-label">Gênero</label>
+      </div>
+
+      <select
+        name="gender"
+        id="gender"
+        class="form-input form-input--medium"
+        formControlName="gender"
+        [class.form-input--success]="correctValidField('gender')"
+      >
+        <option value="" disabled>Gênero</option>
+        <option value="feminine">Feminino</option>
+        <option value="masculine">Masculino</option>
+        <option value="not-inform">Não informar</option>
+      </select>
+    </section>
+
+    <section class="form-user">
+      <div class="form-user__wrapper">
+        <span class="span-required">*</span>
+        <label for="cpf" class="form-label">CPF</label>
+      </div>
+
+      <input
+        type="text"
+        name="cpf"
+        id="cpf"
+        placeholder="___.___.___-__"
+        formControlName="cpf"
+        mask="000.000.000-00"
+        class="form-input form-input--big"
+        [class.form-input--error]="validationForm('cpf') ||  validatorLengthField('cpf')"
+        [class.form-input--success]="correctValidField('cpf')"
+      />
+      <div>
+       <span *ngIf="validationForm('cpf')" class="invalid-feedback">
+        É necessário informar um CPF.
+      </span>
+
+      <span class="invalid-feedback" *ngIf=" validatorLengthField('cpf')">O CPF precisa ter 11 dígitos, por exemplo: 123.456.789-10</span>
+      </div>
+
+
+      <div class="form-user__wrapper">
+        <span class="span-required">*</span>
+        <label for="email" class="form-label">E-mail</label>
+      </div>
+
+      <input
+        type="email"
+        formControlName="email"
+        id="email"
+        name="email"
+        class="form-input form-input--big"
+        [class.form-input--error]="validationForm('email')"
+        [class.form-input--success]="correctValidField('email')"
+      />
+      <span class="invalid-feedback" *ngIf="validationForm('email')">
+        É necessário informar um E-mail.
+      </span>
+
+      <span *ngIf="validationEmail()" class="invalid-feedback">
+        E-mail incompleto
+      </span>
+    </section>
+
+    <section formGroupName="address">
+      <div>
+        <h3 class="form-title">Endereço</h3>
+
+        <section class="form-user">
+          <div class="form-user__wrapper">
+            <span class="span-required">*</span>
+            <label for="zip" class="form-label">CEP</label>
+          </div>
+
+          <input
+            type="text"
+            formControlName="zip"
+            id="zip"
+            name="zip"
+            placeholder="_____-___"
+            mask="00000-000"
+            class="form-input form-input--medium"
+            (blur)="onChangeAddress()"
+            [class.form-input--error]="validationForm('address.zip')"
+            [class.form-input--success]="correctValidField('address.zip')"
+          />
+          <span *ngIf="validationForm('address.zip')" class="invalid-feedback">
+            É necessário informar um CEP.
+          </span>
+        </section>
+      </div>
+
+      <section>
+
+      <section class="form-user">
+        <div class="form-user__wrapper">
+          <span class="span-required">*</span>
+          <label for="street" class="form-label"> Logradouro </label>
+        </div>
+
+        <input
+          type="text"
+          id="street"
+          name="street"
+          formControlName="logradouro"
+          class="form-input form-input--big"
+          [class.form-input--error]="validationForm('address.logradouro')"
+          [class.form-input--success]="correctValidField('address.logradouro')"
+        />
+
+        <span *ngIf="validationForm('address.logradouro')" class="invalid-feedback">
+          O É necessário informar um Logradouro.
+        </span>
+
+        <div class="form-user__wrapper">
+          <span class="span-required">*</span>
+          <label for="complement" class="form-label">Complemento</label>
+        </div>
+
+        <input
+          type="text"
+          id="complement"
+          name="complement"
+          formControlName="complement"
+          class="form-input form-input--big"
+          [class.form-input--error]="validationForm('address.complement')"
+          [class.form-input--success]="correctValidField('address.complement')"
+        />
+        <span
+          *ngIf="validationForm('address.complement')"
+          class="invalid-feedback"
+        >
+          É necessário informar um Complemento.
+        </span>
+      </section>
+
+      <section class="form-user">
+        <div class="form-user__wrapper">
+          <span class="span-required">*</span>
+          <label for="neighborhood" class="form-label">Bairro</label>
+        </div>
+
+        <input
+          type="text"
+          id="neighborhood"
+          name="neighborhood"
+          formControlName="neighborhood"
+          class="form-input form-input--big"
+          [class.form-input--error]="validationForm('address.neighborhood')"
+          [class.form-input--success]="
+            correctValidField('address.neighborhood')
+          "
+        />
+
+        <span
+          *ngIf="validationForm('address.neighborhood')"
+          class="invalid-feedback"
+        >
+          É necessário informar um Bairro.
+        </span>
+
+        <div class="form-user__wrapper">
+          <span class="span-required">*</span>
+          <label for="number" class="form-label">Número</label>
+        </div>
+
+        <input
+          type="text"
+          id="number"
+          name="number"
+          formControlName="number"
+          class="form-input form-input--medium"
+          [class.form-input--error]="validationForm('address.number')"
+          [class.form-input--success]="correctValidField('address.number')"
+        />
+        <span *ngIf="validationForm('address.number')" class="invalid-feedback">
+          É necessário informar um Número.
+        </span>
+      </section>
+
+      <section class="form-user">
+        <div class="form-user__wrapper">
+          <span class="span-required">*</span>
+          <label for="city" class="form-label">Cidade</label>
+        </div>
+        <input
+          type="text"
+          id="city"
+          name="city"
+          formControlName="city"
+          class="form-input form-input--big"
+          [class.form-input--error]="validationForm('address.city')"
+          [class.form-input--success]="correctValidField('address.city')"
+        />
+
+        <span *ngIf="validationForm('address.city')" class="invalid-feedback">
+          É necessário informar uma Cidade.
+        </span>
+
+        <div class="form-user__wrapper">
+          <span class="span-required">*</span>
+          <label for="state" class="form-label">Estado</label>
+        </div>
+
+        <input
+          type="text"
+          id="state"
+          name="state"
+          formControlName="state"
+          placeholder="Ex: SP"
+          class="form-input form-input--medium"
+          [class.form-input--error]="
+            validationForm('address.state') ||
+            validatorLengthField('address.state')
+          "
+          [class.form-input--success]="correctValidField('address.state')"
+        />
+        <span class="invalid-feedback" *ngIf="validationForm('address.state')">
+          É necessário informar um Estado.
+        </span>
+
+        <span
+          class="invalid-feedback"
+          *ngIf=" validatorLengthField('address.state')"
+        >
+          O campo Estado deve ter no máximo 2 caracteres
+        </span>
+      </section>
+    </section>
+    </section>
+
+    <section>
+      <h3 class="form-title">Experiências</h3>
+
+      <section class="form-user">
+        <div class="form-user__wrapper">
+          <span class="span-required">*</span>
+          <label for="experience" class="form-label">Experiência</label>
+        </div>
+
+        <textarea
+          name="experiences"
+          id="experiences"
+          formControlName="experiences"
+          class="form-input form-input--extra-big"
+          [class.form-input--error]="validationForm('experiences')"
+          [class.form-input--success]="correctValidField('experiences')"
+        >
+        </textarea>
+        <span *ngIf="validationForm('experiences')" class="invalid-feedback">
+          É necessário informar uma Experiência.
+        </span>
+      </section>
+    </section>
+
+    <button
+      type="submit"
+      class="btn btn--valid btn--disabled"
+      [disabled]="!registrationForm.valid"
+    >
+      Cadastrar
+    </button>
+  </form>
+</section>

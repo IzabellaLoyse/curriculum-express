@@ -1,0 +1,28 @@
+.footer {
+  height: auto;
+  width: 100%;
+  background-color: rgba(247, 249, 250, 1);
+  margin-top: 2rem;
+
+  &__description {
+    padding-top: 1.125rem;
+
+    h3 {
+      font-size: 1.125rem;
+      font-weight: 500;
+      color: rgba(0, 0, 0, 0.8);
+      margin-bottom: 0.5rem;
+    }
+  }
+}
+
+.footer__infobox {
+  padding-bottom: 1.125rem;
+
+  p {
+    font-size: 1rem;
+    font-weight: 400;
+    color: rgba(0, 0, 0, 0.71);
+    text-align: center;
+  }
+}

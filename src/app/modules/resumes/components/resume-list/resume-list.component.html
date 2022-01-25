@@ -1,0 +1,37 @@
+<section class="container-layout">
+  <h2>Curriculos</h2>
+
+  <article *ngFor="let curriculum of resumesList">
+    <h3>Dados Pessoais</h3>
+    <div>
+      <p>Nome: {{ curriculum.firstName }}</p>
+      <p>Sobrenome: {{ curriculum.lastName }}</p>
+      <p>Data de Nascimento: {{ curriculum.birthDate }}</p>
+      <p>Genero: {{ curriculum.gender }}</p>
+      <p>Telefone: {{ curriculum.phone }}</p>
+      <p>Email: {{ curriculum.email }}</p>
+      <p>CPF: {{ curriculum.cpf }}</p>
+    </div>
+
+    <div>
+      <h3>Endereco</h3>
+      <p>Cep:</p>
+      <p>Logradouro:{{ curriculum.address.logradouro }}</p>
+      <p>Numero: {{ curriculum.address.numero }}</p>
+      <p>Complemento: </p>
+      <p>Bairro:</p>
+      <p>Cidade: {{curriculum.address.localidade}}</p>
+      <p>Estado:</p>
+    </div>
+
+    <div>
+      <h3>Experiencias</h3>
+      <p>Expericais: {{ curriculum.experiences }}</p>
+    </div>
+
+    <div>
+      <button>Remover</button>
+      <button>Exportar</button>
+    </div>
+  </article>
+</section>
