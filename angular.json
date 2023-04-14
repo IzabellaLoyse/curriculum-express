@@ -107,5 +107,7 @@
       }
     }
   },
-  "defaultProject": "cadastro-curriculos"
+  "cli": {
+    "analytics": "d8bd588c-7a32-4273-9920-e6e3f01f88ac"
+  }
 }

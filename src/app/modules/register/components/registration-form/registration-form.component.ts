@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { IAddress } from 'src/app/interfaces/address';
 import { ICurriculum } from 'src/app/interfaces/curriculum';
 import { AddressService } from 'src/app/services/address.service';
@@ -14,14 +14,14 @@ import { validatorPhone } from 'src/app/validators/phoneCustomValidation';
   styleUrls: ['./registration-form.component.scss'],
 })
 export class RegistrationFormComponent implements OnInit {
-  registrationForm: FormGroup = new FormGroup({});
+  registrationForm: UntypedFormGroup = new UntypedFormGroup({});
 
   address: IAddress = {} as IAddress;
 
   resumeData: ICurriculum[] = [] as ICurriculum[];
 
   constructor(
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private addressService: AddressService,
     private curriculumService: CurriculumService
   ) {}

@@ -1,6 +1,6 @@
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 
-export const validatorGender = (control: FormControl) => {
+export const validatorGender = (control: UntypedFormControl) => {
   const gender = control.value;
   const listValuesToCheck = ['feminine', 'masculine', 'not-inform'];
 
