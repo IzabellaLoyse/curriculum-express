@@ -1,6 +1,7 @@
-import { IAddress } from "./address";
+import { IAddress } from './address';
 
-export interface ICurriculum  {
+export interface ICurriculum {
+  id: number;
   firstName: string;
   lastName: string;
   birthDate: string;
@@ -11,5 +12,3 @@ export interface ICurriculum  {
   experiences: string;
   address: IAddress;
 }
-
-

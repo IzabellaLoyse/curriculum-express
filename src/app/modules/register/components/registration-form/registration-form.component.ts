@@ -1,5 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import { Component, Input, OnInit } from '@angular/core';
+import {
+  UntypedFormBuilder,
+  UntypedFormGroup,
+  Validators,
+} from '@angular/forms';
 import { IAddress } from 'src/app/interfaces/address';
 import { ICurriculum } from 'src/app/interfaces/curriculum';
 import { AddressService } from 'src/app/services/address.service';
@@ -14,11 +18,11 @@ import { validatorPhone } from 'src/app/validators/phoneCustomValidation';
   styleUrls: ['./registration-form.component.scss'],
 })
 export class RegistrationFormComponent implements OnInit {
-  registrationForm: UntypedFormGroup = new UntypedFormGroup({});
+  @Input() public isEdit: boolean = false;
+  @Input() public data!: ICurriculum[];
 
-  address: IAddress = {} as IAddress;
-
-  resumeData: ICurriculum[] = [] as ICurriculum[];
+  public registrationForm: UntypedFormGroup = new UntypedFormGroup({});
+  public address: IAddress = {} as IAddress;
 
   constructor(
     private formBuilder: UntypedFormBuilder,
@@ -26,13 +30,17 @@ export class RegistrationFormComponent implements OnInit {
     private curriculumService: CurriculumService
   ) {}
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.createForm();
-    this.resumeData = this.curriculumService.getResume;
+
+    if (this.isEdit) {
+      this.registrationForm.patchValue(this.data);
+    }
   }
 
-  createForm() {
+  public createForm(): void {
     this.registrationForm = this.formBuilder.group({
+      id: [Math.floor(Math.random() * 1000)],
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
       birthDate: ['', Validators.required],
@@ -46,17 +54,17 @@ export class RegistrationFormComponent implements OnInit {
         ]),
       ],
       phone: ['', Validators.compose([Validators.required, validatorPhone])],
-      gender: ['', validatorGender],
+      gender: ['', validatorGender, Validators.required],
       experiences: ['', Validators.required],
 
       address: this.formBuilder.group({
-        zip: ['', Validators.required],
+        cep: ['', Validators.required],
         logradouro: ['', Validators.required],
-        complement: ['', Validators.required],
-        neighborhood: ['', Validators.required],
-        number: ['', Validators.required],
-        city: ['', Validators.required],
-        state: [
+        complemento: ['', Validators.required],
+        bairro: ['', Validators.required],
+        numero: ['', Validators.required],
+        localidade: ['', Validators.required],
+        uf: [
           '',
           Validators.compose([Validators.required, Validators.maxLength(2)]),
         ],
@@ -64,7 +72,7 @@ export class RegistrationFormComponent implements OnInit {
     });
   }
 
-  onChangeAddress() {
+  public onChangeAddress(): void {
     let zipCode = this.registrationForm.get('address.zip')?.value;
 
     this.addressService.getAddress(zipCode).subscribe((data) => {
@@ -83,7 +91,7 @@ export class RegistrationFormComponent implements OnInit {
     });
   }
 
-  validationForm(input: string) {
+  public validationForm(input: string) {
     return (
       !this.registrationForm.get(input)?.valid &&
       this.registrationForm.get(input)?.touched &&
@@ -117,11 +125,11 @@ export class RegistrationFormComponent implements OnInit {
     }
   }
 
-  onReset() {
+  public onReset() {
     this.registrationForm.reset();
   }
 
-  onSubmit() {
+  public onSubmit(): void {
     if (this.registrationForm.valid) {
       this.curriculumService.addCurriculum(this.registrationForm.value);
     }

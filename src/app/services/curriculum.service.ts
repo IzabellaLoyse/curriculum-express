@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, of, Subject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { ICurriculum } from '../interfaces/curriculum';
 import { StorageService } from './storage.service';
 
@@ -9,38 +9,62 @@ const curriculumKey = 'key_curriculum';
   providedIn: 'root',
 })
 export class CurriculumService {
-  curriculum: ICurriculum[] = [] as ICurriculum[];
-  resumesList: Subject<ICurriculum[]> = new Subject();
+  public curriculum: ICurriculum[] = [] as ICurriculum[];
+  public curriculumBehavior: BehaviorSubject<ICurriculum[]>;
+  public curriculum$!: Observable<ICurriculum[]>;
 
   constructor(private storageService: StorageService) {
     this.curriculum = this.storageService.getDataItem(curriculumKey) || [];
+    this.curriculumBehavior = new BehaviorSubject<ICurriculum[]>(
+      this.curriculum
+    );
+    this.curriculum$ = this.curriculumBehavior.asObservable();
   }
 
-  // getCurriculum(key: string): ICurriculum {
+  public getResumes(): Observable<ICurriculum[]> {
+    return this.curriculum$;
+  }
 
-  // }
-
-  getResumes(): Observable<ICurriculum[]> {
-    const resume = of(this.curriculum);
+  public getResumeById(id: number): ICurriculum | undefined {
+    const resume = this.curriculum.find((item) => item.id === id);
     return resume;
   }
 
-
-
-  get getResume(): ICurriculum[] {
-    return this.curriculum;
-  }
-
-  saveCurriculum() {
+  public saveCurriculum(): void {
     this.storageService.setDataItem(curriculumKey, this.curriculum);
   }
 
-  addCurriculum(curriculum: ICurriculum) {
+  public addCurriculum(curriculum: ICurriculum): void {
     this.curriculum.push(curriculum);
-    console.log(curriculum);
-
+    this.curriculumBehavior.next(this.curriculum);
     this.saveCurriculum();
   }
 
-  
+  public deleteCurriculumById(id: number): void {
+    const index = this.curriculum.findIndex((item) => item.id === id);
+
+    this.curriculum.splice(index, 1);
+    this.curriculumBehavior.next(this.curriculum);
+    this.saveCurriculum();
+  }
+
+  public exportCurriculumById(id: number): string {
+    const data = this.curriculum.map((item) =>
+      item.id === id
+        ? `
+        Currículo de ${item.firstName} ${item.lastName}
+
+        Nome completo: ${item.firstName} ${item.lastName}
+        Email: ${item.email}
+        Telefone: ${item.phone}
+
+
+        `
+        : ''
+    );
+
+    console.log(data);
+
+    return data.join('');
+  }
 }

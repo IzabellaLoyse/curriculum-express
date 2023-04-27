@@ -6,9 +6,10 @@ import { RegisterRoutingModule } from './register-routing.module';
 import { LayoutModule } from '../layout/layout.module';
 import { RegistrationFormComponent } from './components/registration-form/registration-form.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { EditFormComponent } from './components/edit-form/edit-form.component';
 
 @NgModule({
-  declarations: [RegistrationFormComponent],
+  declarations: [RegistrationFormComponent, EditFormComponent],
   imports: [
     CommonModule,
     RegisterRoutingModule,

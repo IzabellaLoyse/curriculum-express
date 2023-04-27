@@ -7,21 +7,21 @@
       <p>Nome: {{ curriculum.firstName }}</p>
       <p>Sobrenome: {{ curriculum.lastName }}</p>
       <p>Data de Nascimento: {{ curriculum.birthDate }}</p>
-      <p>Genero: {{ curriculum.gender }}</p>
+      <p>Gênero: {{ curriculum.gender }}</p>
       <p>Telefone: {{ curriculum.phone }}</p>
       <p>Email: {{ curriculum.email }}</p>
       <p>CPF: {{ curriculum.cpf }}</p>
     </div>
 
     <div>
-      <h3>Endereco</h3>
-      <p>Cep:</p>
+      <h3>Endereço</h3>
+      <p>Cep: {{ curriculum.address.cep }}</p>
       <p>Logradouro:{{ curriculum.address.logradouro }}</p>
       <p>Numero: {{ curriculum.address.numero }}</p>
-      <p>Complemento: </p>
-      <p>Bairro:</p>
-      <p>Cidade: {{curriculum.address.localidade}}</p>
-      <p>Estado:</p>
+      <p>Complemento: {{ curriculum.address.complemento }}</p>
+      <p>Bairro: {{ curriculum.address.bairro }}</p>
+      <p>Cidade: {{ curriculum.address.localidade }}</p>
+      <p>Estado: {{ curriculum.address.uf }}</p>
     </div>
 
     <div>
@@ -30,8 +30,9 @@
     </div>
 
     <div>
-      <button>Remover</button>
-      <button>Exportar</button>
+      <button (click)="onEditResume(curriculum.id)">Editar</button>
+      <button (click)="onRemoveResume(curriculum.id)">Remover</button>
+      <button (click)="exportCurriculum(curriculum.id)">Exportar</button>
     </div>
   </article>
 </section>

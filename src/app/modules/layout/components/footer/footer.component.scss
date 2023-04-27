@@ -1,15 +1,21 @@
+@import "variables.scss";
+
 .footer {
   height: auto;
   width: 100%;
   background-color: rgba(247, 249, 250, 1);
   margin-top: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
 
   &__description {
     padding-top: 1.125rem;
 
     h3 {
       font-size: 1.125rem;
-      font-weight: 500;
+      font-weight: map-get($font-weights, "medium");
       color: rgba(0, 0, 0, 0.8);
       margin-bottom: 0.5rem;
     }
@@ -21,8 +27,7 @@
 
   p {
     font-size: 1rem;
-    font-weight: 400;
+    font-weight: map-get($font-weights, "regular");
     color: rgba(0, 0, 0, 0.71);
-    text-align: center;
   }
 }

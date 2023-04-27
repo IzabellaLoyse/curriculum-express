@@ -1,6 +1,6 @@
 <section class="container-register container-layout">
   <div class="wrapper-header">
-    <h2 class="wrapper-header__title">Criar seu cadastro</h2>
+    <h2 class="wrapper-header__title">Crie seu cadastro</h2>
     <p class="wrapper-header__info">
       <span class="span-required">*</span>
       Campos obrigatórios
@@ -94,6 +94,7 @@
       </span>
 
       <div class="form-user__wrapper">
+        <span class="span-required">*</span>
         <label for="gender" class="form-label">Gênero</label>
       </div>
 
@@ -125,17 +126,20 @@
         formControlName="cpf"
         mask="000.000.000-00"
         class="form-input form-input--big"
-        [class.form-input--error]="validationForm('cpf') ||  validatorLengthField('cpf')"
+        [class.form-input--error]="
+          validationForm('cpf') || validatorLengthField('cpf')
+        "
         [class.form-input--success]="correctValidField('cpf')"
       />
       <div>
-       <span *ngIf="validationForm('cpf')" class="invalid-feedback">
-        É necessário informar um CPF.
-      </span>
+        <span *ngIf="validationForm('cpf')" class="invalid-feedback">
+          É necessário informar um CPF.
+        </span>
 
-      <span class="invalid-feedback" *ngIf=" validatorLengthField('cpf')">O CPF precisa ter 11 dígitos, por exemplo: 123.456.789-10</span>
+        <span class="invalid-feedback" *ngIf="validatorLengthField('cpf')"
+          >O CPF precisa ter 11 dígitos, por exemplo: 123.456.789-10</span
+        >
       </div>
-
 
       <div class="form-user__wrapper">
         <span class="span-required">*</span>
@@ -172,159 +176,170 @@
 
           <input
             type="text"
-            formControlName="zip"
+            formControlName="cep"
             id="zip"
             name="zip"
             placeholder="_____-___"
             mask="00000-000"
             class="form-input form-input--medium"
             (blur)="onChangeAddress()"
-            [class.form-input--error]="validationForm('address.zip')"
-            [class.form-input--success]="correctValidField('address.zip')"
+            [class.form-input--error]="validationForm('address.cep')"
+            [class.form-input--success]="correctValidField('address.cep')"
           />
-          <span *ngIf="validationForm('address.zip')" class="invalid-feedback">
+          <span *ngIf="validationForm('address.cep')" class="invalid-feedback">
             É necessário informar um CEP.
           </span>
         </section>
       </div>
 
       <section>
+        <section class="form-user">
+          <div class="form-user__wrapper">
+            <span class="span-required">*</span>
+            <label for="street" class="form-label"> Logradouro </label>
+          </div>
 
-      <section class="form-user">
-        <div class="form-user__wrapper">
-          <span class="span-required">*</span>
-          <label for="street" class="form-label"> Logradouro </label>
-        </div>
+          <input
+            type="text"
+            id="street"
+            name="street"
+            formControlName="logradouro"
+            class="form-input form-input--big"
+            [class.form-input--error]="validationForm('address.logradouro')"
+            [class.form-input--success]="
+              correctValidField('address.logradouro')
+            "
+          />
 
-        <input
-          type="text"
-          id="street"
-          name="street"
-          formControlName="logradouro"
-          class="form-input form-input--big"
-          [class.form-input--error]="validationForm('address.logradouro')"
-          [class.form-input--success]="correctValidField('address.logradouro')"
-        />
+          <span
+            *ngIf="validationForm('address.logradouro')"
+            class="invalid-feedback"
+          >
+            O É necessário informar um Logradouro.
+          </span>
 
-        <span *ngIf="validationForm('address.logradouro')" class="invalid-feedback">
-          O É necessário informar um Logradouro.
-        </span>
+          <div class="form-user__wrapper">
+            <span class="span-required">*</span>
+            <label for="complement" class="form-label">complementoo</label>
+          </div>
 
-        <div class="form-user__wrapper">
-          <span class="span-required">*</span>
-          <label for="complement" class="form-label">Complemento</label>
-        </div>
+          <input
+            type="text"
+            id="complement"
+            name="complement"
+            formControlName="complemento"
+            class="form-input form-input--big"
+            [class.form-input--error]="validationForm('address.complemento')"
+            [class.form-input--success]="
+              correctValidField('address.complemento')
+            "
+          />
+          <span
+            *ngIf="validationForm('address.complemento')"
+            class="invalid-feedback"
+          >
+            É necessário informar um complemento.
+          </span>
+        </section>
 
-        <input
-          type="text"
-          id="complement"
-          name="complement"
-          formControlName="complement"
-          class="form-input form-input--big"
-          [class.form-input--error]="validationForm('address.complement')"
-          [class.form-input--success]="correctValidField('address.complement')"
-        />
-        <span
-          *ngIf="validationForm('address.complement')"
-          class="invalid-feedback"
-        >
-          É necessário informar um Complemento.
-        </span>
+        <section class="form-user">
+          <div class="form-user__wrapper">
+            <span class="span-required">*</span>
+            <label for="neighborhood" class="form-label">Bairro</label>
+          </div>
+
+          <input
+            type="text"
+            id="neighborhood"
+            name="neighborhood"
+            formControlName="bairro"
+            class="form-input form-input--big"
+            [class.form-input--error]="validationForm('address.bairro')"
+            [class.form-input--success]="correctValidField('address.bairro')"
+          />
+
+          <span
+            *ngIf="validationForm('address.bairro')"
+            class="invalid-feedback"
+          >
+            É necessário informar um Bairro.
+          </span>
+
+          <div class="form-user__wrapper">
+            <span class="span-required">*</span>
+            <label for="number" class="form-label">Número</label>
+          </div>
+
+          <input
+            type="text"
+            id="number"
+            name="number"
+            formControlName="numero"
+            class="form-input form-input--medium"
+            [class.form-input--error]="validationForm('address.numero')"
+            [class.form-input--success]="correctValidField('address.numero')"
+          />
+          <span
+            *ngIf="validationForm('address.numero')"
+            class="invalid-feedback"
+          >
+            É necessário informar um Número.
+          </span>
+        </section>
+
+        <section class="form-user">
+          <div class="form-user__wrapper">
+            <span class="span-required">*</span>
+            <label for="city" class="form-label">Cidade</label>
+          </div>
+          <input
+            type="text"
+            id="city"
+            name="city"
+            formControlName="localidade"
+            class="form-input form-input--big"
+            [class.form-input--error]="validationForm('address.localidade')"
+            [class.form-input--success]="
+              correctValidField('address.localidade')
+            "
+          />
+
+          <span
+            *ngIf="validationForm('address.localidade')"
+            class="invalid-feedback"
+          >
+            É necessário informar uma Cidade.
+          </span>
+
+          <div class="form-user__wrapper">
+            <span class="span-required">*</span>
+            <label for="state" class="form-label">Estado</label>
+          </div>
+
+          <input
+            type="text"
+            id="state"
+            name="state"
+            formControlName="uf"
+            placeholder="Ex: SP"
+            class="form-input form-input--medium"
+            [class.form-input--error]="
+              validationForm('address.uf') || validatorLengthField('address.uf')
+            "
+            [class.form-input--success]="correctValidField('address.uf')"
+          />
+          <span class="invalid-feedback" *ngIf="validationForm('address.uf')">
+            É necessário informar um Estado.
+          </span>
+
+          <span
+            class="invalid-feedback"
+            *ngIf="validatorLengthField('address.uf')"
+          >
+            O campo Estado deve ter no máximo 2 caracteres
+          </span>
+        </section>
       </section>
-
-      <section class="form-user">
-        <div class="form-user__wrapper">
-          <span class="span-required">*</span>
-          <label for="neighborhood" class="form-label">Bairro</label>
-        </div>
-
-        <input
-          type="text"
-          id="neighborhood"
-          name="neighborhood"
-          formControlName="neighborhood"
-          class="form-input form-input--big"
-          [class.form-input--error]="validationForm('address.neighborhood')"
-          [class.form-input--success]="
-            correctValidField('address.neighborhood')
-          "
-        />
-
-        <span
-          *ngIf="validationForm('address.neighborhood')"
-          class="invalid-feedback"
-        >
-          É necessário informar um Bairro.
-        </span>
-
-        <div class="form-user__wrapper">
-          <span class="span-required">*</span>
-          <label for="number" class="form-label">Número</label>
-        </div>
-
-        <input
-          type="text"
-          id="number"
-          name="number"
-          formControlName="number"
-          class="form-input form-input--medium"
-          [class.form-input--error]="validationForm('address.number')"
-          [class.form-input--success]="correctValidField('address.number')"
-        />
-        <span *ngIf="validationForm('address.number')" class="invalid-feedback">
-          É necessário informar um Número.
-        </span>
-      </section>
-
-      <section class="form-user">
-        <div class="form-user__wrapper">
-          <span class="span-required">*</span>
-          <label for="city" class="form-label">Cidade</label>
-        </div>
-        <input
-          type="text"
-          id="city"
-          name="city"
-          formControlName="city"
-          class="form-input form-input--big"
-          [class.form-input--error]="validationForm('address.city')"
-          [class.form-input--success]="correctValidField('address.city')"
-        />
-
-        <span *ngIf="validationForm('address.city')" class="invalid-feedback">
-          É necessário informar uma Cidade.
-        </span>
-
-        <div class="form-user__wrapper">
-          <span class="span-required">*</span>
-          <label for="state" class="form-label">Estado</label>
-        </div>
-
-        <input
-          type="text"
-          id="state"
-          name="state"
-          formControlName="state"
-          placeholder="Ex: SP"
-          class="form-input form-input--medium"
-          [class.form-input--error]="
-            validationForm('address.state') ||
-            validatorLengthField('address.state')
-          "
-          [class.form-input--success]="correctValidField('address.state')"
-        />
-        <span class="invalid-feedback" *ngIf="validationForm('address.state')">
-          É necessário informar um Estado.
-        </span>
-
-        <span
-          class="invalid-feedback"
-          *ngIf=" validatorLengthField('address.state')"
-        >
-          O campo Estado deve ter no máximo 2 caracteres
-        </span>
-      </section>
-    </section>
     </section>
 
     <section>
@@ -333,7 +348,7 @@
       <section class="form-user">
         <div class="form-user__wrapper">
           <span class="span-required">*</span>
-          <label for="experience" class="form-label">Experiência</label>
+          <label for="experiences" class="form-label">Experiência</label>
         </div>
 
         <textarea

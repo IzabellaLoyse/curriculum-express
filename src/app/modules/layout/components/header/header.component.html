@@ -1,6 +1,8 @@
 <header class="header">
   <div class="container-layout header__container">
-    <h1 class="header__title">Curriculum Express</h1>
+    <h1 class="header__title">
+      <a [routerLink]="['/register']"> Curriculum Express</a>
+    </h1>
 
     <nav>
       <ul class="navbar-menu">
@@ -8,7 +10,9 @@
           <a [routerLink]="['/register']" class="navbar-menu__link">Cadastro</a>
         </li>
         <li class="navbar-menu__item">
-          <a [routerLink]="['/resumes']" class="navbar-menu__link">Curriculos</a>
+          <a [routerLink]="['/resumes']" class="navbar-menu__link"
+            >Currículos</a
+          >
         </li>
       </ul>
     </nav>
