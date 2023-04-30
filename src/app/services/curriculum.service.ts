@@ -25,7 +25,7 @@ export class CurriculumService {
     return this.curriculum$;
   }
 
-  public getResumeById(id: number): ICurriculum | undefined {
+  public getResumeById(id: number): any {
     const resume = this.curriculum.find((item) => item.id === id);
     return resume;
   }
@@ -36,6 +36,15 @@ export class CurriculumService {
 
   public addCurriculum(curriculum: ICurriculum): void {
     this.curriculum.push(curriculum);
+    this.curriculumBehavior.next(this.curriculum);
+    this.saveCurriculum();
+  }
+
+  public updateCurriculum(curriculum: ICurriculum): void {
+    const index = this.curriculum.findIndex(
+      (item) => item.id === curriculum.id
+    );
+    this.curriculum[index] = curriculum;
     this.curriculumBehavior.next(this.curriculum);
     this.saveCurriculum();
   }
@@ -55,15 +64,20 @@ export class CurriculumService {
         Currículo de ${item.firstName} ${item.lastName}
 
         Nome completo: ${item.firstName} ${item.lastName}
+        Data de nascimento: ${item.birthDate}
         Email: ${item.email}
         Telefone: ${item.phone}
+        CPF: ${item.cpf}
+        Gênero: ${item.gender}
 
+        Endereço:
+         ${item.address.logradouro} ${item.address.localidade}, ${item.address.numero}, ${item.address.complemento}, ${item.address.bairro}, ${item.address.uf} - ${item.address.cep}
 
+        Experiência profissional:
+        ${item.experiences}
         `
         : ''
     );
-
-    console.log(data);
 
     return data.join('');
   }

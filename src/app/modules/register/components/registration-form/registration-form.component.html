@@ -1,6 +1,6 @@
 <section class="container-register container-layout">
   <div class="wrapper-header">
-    <h2 class="wrapper-header__title">Crie seu cadastro</h2>
+    <h2 class="wrapper-header__title">{{ titleForm }}</h2>
     <p class="wrapper-header__info">
       <span class="span-required">*</span>
       Campos obrigatórios
@@ -220,7 +220,7 @@
 
           <div class="form-user__wrapper">
             <span class="span-required">*</span>
-            <label for="complement" class="form-label">complementoo</label>
+            <label for="complement" class="form-label">Complemento</label>
           </div>
 
           <input
@@ -371,7 +371,7 @@
       class="btn btn--valid btn--disabled"
       [disabled]="!registrationForm.valid"
     >
-      Cadastrar
+      {{ btnText }}
     </button>
   </form>
 </section>

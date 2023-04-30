@@ -1,38 +1,95 @@
 <section class="container-layout">
-  <h2>Curriculos</h2>
+  <h2 class="container-layout__title">Listagem de Currículos</h2>
 
-  <article *ngFor="let curriculum of resumesList">
+  <article class="container-curriculum" *ngFor="let curriculum of resumesList">
     <h3>Dados Pessoais</h3>
-    <div>
-      <p>Nome: {{ curriculum.firstName }}</p>
-      <p>Sobrenome: {{ curriculum.lastName }}</p>
-      <p>Data de Nascimento: {{ curriculum.birthDate }}</p>
-      <p>Gênero: {{ curriculum.gender }}</p>
-      <p>Telefone: {{ curriculum.phone }}</p>
-      <p>Email: {{ curriculum.email }}</p>
-      <p>CPF: {{ curriculum.cpf }}</p>
+
+    <div class="container-curriculum__wrapper">
+      <p>
+        <span class="container-curriculum__span">Nome completo:</span>
+        {{ curriculum.firstName }}
+        {{ curriculum.lastName }}
+      </p>
+      <p>
+        <span class="container-curriculum__span">Data de Nascimento:</span>
+        {{ curriculum.birthDate }}
+      </p>
+      <p>
+        <span class="container-curriculum__span">Gênero:</span>
+        {{ curriculum.gender | genderTranslation }}
+      </p>
+      <p>
+        <span class="container-curriculum__span">CPF:</span>
+        {{ curriculum.cpf }}
+      </p>
+    </div>
+
+    <div class="container-curriculum__wrapper">
+      <p>
+        <span class="container-curriculum__span">Telefone: </span>
+        {{ curriculum.phone }}
+      </p>
+      <p>
+        <span class="container-curriculum__span"> E-mail:</span>
+        {{ curriculum.email }}
+      </p>
     </div>
 
     <div>
       <h3>Endereço</h3>
-      <p>Cep: {{ curriculum.address.cep }}</p>
-      <p>Logradouro:{{ curriculum.address.logradouro }}</p>
-      <p>Numero: {{ curriculum.address.numero }}</p>
-      <p>Complemento: {{ curriculum.address.complemento }}</p>
-      <p>Bairro: {{ curriculum.address.bairro }}</p>
-      <p>Cidade: {{ curriculum.address.localidade }}</p>
-      <p>Estado: {{ curriculum.address.uf }}</p>
+
+      <div class="container-curriculum__wrapper">
+        <p>
+          <span class="container-curriculum__span"> Logradouro:</span>
+          {{ curriculum.address.logradouro }}
+        </p>
+        <p>
+          <span class="container-curriculum__span">Número:</span>
+          {{ curriculum.address.numero }}
+        </p>
+        <p>
+          <span class="container-curriculum__span">Complemento:</span>
+          {{ curriculum.address.complemento }}
+        </p>
+        <p>
+          <span class="container-curriculum__span">Bairro: </span>
+          {{ curriculum.address.bairro }}
+        </p>
+        <p>
+          <span class="container-curriculum__span"> Cidade:</span>
+          {{ curriculum.address.localidade }}
+        </p>
+        <p>
+          <span class="container-curriculum__span">UF: </span>
+          {{ curriculum.address.uf }}
+        </p>
+        <p>
+          <span class="container-curriculum__span"> CEP:</span>
+          {{ curriculum.address.cep }}
+        </p>
+      </div>
     </div>
 
     <div>
-      <h3>Experiencias</h3>
-      <p>Expericais: {{ curriculum.experiences }}</p>
+      <h3>Experiência profissional</h3>
+
+      <div class="container-curriculum__wrapper">
+        <p>{{ curriculum.experiences }}</p>
+      </div>
     </div>
 
-    <div>
-      <button (click)="onEditResume(curriculum.id)">Editar</button>
-      <button (click)="onRemoveResume(curriculum.id)">Remover</button>
-      <button (click)="exportCurriculum(curriculum.id)">Exportar</button>
+    <div class="container-buttons">
+      <button class="btn btn--edit" (click)="onEditResume(curriculum.id)">
+        Editar
+      </button>
+      <button class="btn btn--delete" (click)="onRemoveResume(curriculum.id)">
+        Remover
+      </button>
+      <button class="btn btn--export" (click)="exportCurriculum(curriculum.id)">
+        Exportar
+      </button>
     </div>
+
+    <span class="line"></span>
   </article>
 </section>

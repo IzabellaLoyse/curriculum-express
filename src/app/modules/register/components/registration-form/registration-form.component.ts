@@ -1,9 +1,11 @@
+import { state, style, trigger } from '@angular/animations';
 import { Component, Input, OnInit } from '@angular/core';
 import {
   UntypedFormBuilder,
   UntypedFormGroup,
   Validators,
 } from '@angular/forms';
+import { catchError, throwError } from 'rxjs';
 import { IAddress } from 'src/app/interfaces/address';
 import { ICurriculum } from 'src/app/interfaces/curriculum';
 import { AddressService } from 'src/app/services/address.service';
@@ -11,13 +13,19 @@ import { CurriculumService } from 'src/app/services/curriculum.service';
 import { validatorCPF } from 'src/app/validators/cpfCustomValidation';
 import { validatorGender } from 'src/app/validators/genderCustomValidation';
 import { validatorPhone } from 'src/app/validators/phoneCustomValidation';
+import { AlertService } from '../../../../services/alert.service';
+import { validatorBirthDate } from '../../../../validators/birthDateCustomValidation';
+import { validateZipCode } from '../../../../validators/zipCustomValidation';
 
 @Component({
   selector: 'app-registration-form',
   templateUrl: './registration-form.component.html',
   styleUrls: ['./registration-form.component.scss'],
+  animations: [trigger('openClose', [state('open', style({}))])],
 })
 export class RegistrationFormComponent implements OnInit {
+  @Input() public titleForm: string = 'Crie seu cadastro';
+  @Input() public btnText: string = 'Cadastrar';
   @Input() public isEdit: boolean = false;
   @Input() public data!: ICurriculum[];
 
@@ -27,7 +35,8 @@ export class RegistrationFormComponent implements OnInit {
   constructor(
     private formBuilder: UntypedFormBuilder,
     private addressService: AddressService,
-    private curriculumService: CurriculumService
+    private curriculumService: CurriculumService,
+    private alertService: AlertService
   ) {}
 
   public ngOnInit(): void {
@@ -43,7 +52,10 @@ export class RegistrationFormComponent implements OnInit {
       id: [Math.floor(Math.random() * 1000)],
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
-      birthDate: ['', Validators.required],
+      birthDate: [
+        '',
+        Validators.compose([Validators.required, validatorBirthDate]),
+      ],
       email: ['', Validators.compose([Validators.required, Validators.email])],
       cpf: [
         '',
@@ -54,11 +66,11 @@ export class RegistrationFormComponent implements OnInit {
         ]),
       ],
       phone: ['', Validators.compose([Validators.required, validatorPhone])],
-      gender: ['', validatorGender, Validators.required],
+      gender: ['', Validators.compose([Validators.required, validatorGender])],
       experiences: ['', Validators.required],
 
       address: this.formBuilder.group({
-        cep: ['', Validators.required],
+        cep: ['', Validators.compose([Validators.required, validateZipCode])],
         logradouro: ['', Validators.required],
         complemento: ['', Validators.required],
         bairro: ['', Validators.required],
@@ -73,22 +85,30 @@ export class RegistrationFormComponent implements OnInit {
   }
 
   public onChangeAddress(): void {
-    let zipCode = this.registrationForm.get('address.zip')?.value;
+    let zipCode = this.registrationForm.get('address.cep')?.value;
 
-    this.addressService.getAddress(zipCode).subscribe((data) => {
-      this.address = data;
-      const { localidade, logradouro } = data;
+    this.addressService
+      .getAddress(zipCode)
+      .pipe(
+        catchError((error) => {
+          this.alertService.alertError('CEP não encontrado');
+          return throwError(() => error);
+        })
+      )
+      .subscribe((data) => {
+        this.address = data;
+        const { localidade, logradouro } = data;
 
-      this.registrationForm.patchValue({
-        address: {
-          logradouro: logradouro,
-          complement: this.address.complemento,
-          neighborhood: this.address.bairro,
-          city: localidade,
-          state: this.address.uf,
-        },
+        this.registrationForm.patchValue({
+          address: {
+            logradouro: logradouro,
+            complemento: this.address.complemento,
+            bairro: this.address.bairro,
+            localidade: localidade,
+            uf: this.address.uf,
+          },
+        });
       });
-    });
   }
 
   public validationForm(input: string) {
@@ -132,8 +152,9 @@ export class RegistrationFormComponent implements OnInit {
   public onSubmit(): void {
     if (this.registrationForm.valid) {
       this.curriculumService.addCurriculum(this.registrationForm.value);
-    }
+      this.alertService.alertSuccess('Currículo cadastrado com sucesso!');
 
-    this.onReset();
+      this.onReset();
+    }
   }
 }

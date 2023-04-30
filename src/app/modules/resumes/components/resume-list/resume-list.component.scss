@@ -1,0 +1,107 @@
+@import "variables.scss";
+
+.container-layout__title {
+  text-align: center;
+  margin-bottom: 2rem;
+  margin-top: 2rem;
+  letter-spacing: 1px;
+  font-size: 1.5rem;
+}
+
+.container-curriculum {
+  margin-top: 2rem;
+
+  h3 {
+    margin-bottom: 0.5rem;
+    margin-top: 0.5rem;
+    letter-spacing: 1px;
+    font-size: 1.3rem;
+
+    @media (max-width: 768px) {
+      font-size: 1.2rem;
+    }
+  }
+
+  &__wrapper {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+
+    @media (max-width: 768px) {
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    p {
+      font-size: 1.2rem;
+
+      @media (max-width: 768px) {
+        font-size: 1rem;
+      }
+    }
+  }
+}
+
+.container-curriculum__span {
+  color: rgb(118, 92, 215);
+  font-weight: map-get($font-weights, "medium");
+}
+
+.container-buttons {
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+}
+
+.btn {
+  border: none;
+  border-radius: 10px;
+  color: #fff;
+  font-weight: map-get($font-weights, "bold");
+  padding: 0.5rem 0.5rem;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  height: 2.5rem;
+  width: 5rem;
+  font-size: 1rem;
+  text-align: center;
+
+  @media (max-width: 768px) {
+    font-size: 0.8rem;
+    width: 4rem;
+  }
+
+  &--edit {
+    background-color: #2196f3;
+
+    &:hover {
+      opacity: 0.8;
+    }
+  }
+
+  &--delete {
+    background-color: #f44336;
+
+    &:hover {
+      opacity: 0.8;
+    }
+  }
+
+  &--export {
+    background-color: #4caf50;
+
+    &:hover {
+      opacity: 0.8;
+    }
+  }
+}
+
+.line {
+  width: 100%;
+  height: 1px;
+  background-color: #ccc;
+  margin-top: 1rem;
+  display: inline-block;
+}

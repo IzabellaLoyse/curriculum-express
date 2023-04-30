@@ -1,14 +1,9 @@
-import { UntypedFormControl } from '@angular/forms';
+import { AbstractControl } from '@angular/forms';
 
-export const validatorGender = (control: UntypedFormControl) => {
+export const validatorGender = (control: AbstractControl) => {
   const gender = control.value;
   const listValuesToCheck = ['feminine', 'masculine', 'not-inform'];
+  const isValid = listValuesToCheck.includes(gender);
 
-  return listValuesToCheck.includes(gender)
-    ? null
-    : {
-        validatorGender: {
-          valid: false,
-        },
-      };
+  return isValid ? null : { validatorGender: { valid: false } };
 };

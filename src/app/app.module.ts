@@ -6,6 +6,8 @@ import { AppComponent } from './app.component';
 
 import { HttpClientModule } from '@angular/common/http';
 
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { environment } from '../environments/environment';
 import { RegisterModule } from './modules/register/register.module';
 import { ResumesModule } from './modules/resumes/resumes.module';
@@ -18,6 +20,8 @@ import { ResumesModule } from './modules/resumes/resumes.module';
     HttpClientModule,
     RegisterModule,
     ResumesModule,
+    MatSnackBarModule,
+    BrowserAnimationsModule,
   ],
   providers: [
     {
