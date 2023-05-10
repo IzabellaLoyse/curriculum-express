@@ -23,5 +23,7 @@ export class EditFormComponent implements OnInit {
     this.dataForm = this.curriculumService.getResumeById(id);
   }
 
-  public editCurriculum(curriculum: ICurriculum): void {}
+  public editCurriculum(curriculum: any): void {
+    this.curriculumService.updateCurriculum(curriculum);
+  }
 }

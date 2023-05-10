@@ -1,11 +1,18 @@
 import { state, style, trigger } from '@angular/animations';
-import { Component, Input, OnInit } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
+} from '@angular/core';
 import {
   UntypedFormBuilder,
   UntypedFormGroup,
   Validators,
 } from '@angular/forms';
-import { catchError, throwError } from 'rxjs';
+import { ReplaySubject, catchError, takeUntil, throwError } from 'rxjs';
 import { IAddress } from 'src/app/interfaces/address';
 import { ICurriculum } from 'src/app/interfaces/curriculum';
 import { AddressService } from 'src/app/services/address.service';
@@ -23,14 +30,17 @@ import { validateZipCode } from '../../../../validators/zipCustomValidation';
   styleUrls: ['./registration-form.component.scss'],
   animations: [trigger('openClose', [state('open', style({}))])],
 })
-export class RegistrationFormComponent implements OnInit {
+export class RegistrationFormComponent implements OnInit, OnDestroy {
   @Input() public titleForm: string = 'Crie seu cadastro';
   @Input() public btnText: string = 'Cadastrar';
   @Input() public isEdit: boolean = false;
   @Input() public data!: ICurriculum[];
+  @Output() sendCurriculum = new EventEmitter<ICurriculum[]>();
 
   public registrationForm: UntypedFormGroup = new UntypedFormGroup({});
   public address: IAddress = {} as IAddress;
+
+  public destroyed$ = new ReplaySubject<void>(1);
 
   constructor(
     private formBuilder: UntypedFormBuilder,
@@ -45,6 +55,11 @@ export class RegistrationFormComponent implements OnInit {
     if (this.isEdit) {
       this.registrationForm.patchValue(this.data);
     }
+  }
+
+  public ngOnDestroy(): void {
+    this.destroyed$.next();
+    this.destroyed$.complete();
   }
 
   public createForm(): void {
@@ -93,7 +108,8 @@ export class RegistrationFormComponent implements OnInit {
         catchError((error) => {
           this.alertService.alertError('CEP não encontrado');
           return throwError(() => error);
-        })
+        }),
+        takeUntil(this.destroyed$)
       )
       .subscribe((data) => {
         this.address = data;
@@ -156,5 +172,9 @@ export class RegistrationFormComponent implements OnInit {
 
       this.onReset();
     }
+  }
+
+  public onEdit(): void {
+    this.sendCurriculum.emit(this.registrationForm.value);
   }
 }

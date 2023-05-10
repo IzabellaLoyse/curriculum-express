@@ -370,6 +370,7 @@
       type="submit"
       class="btn btn--valid btn--disabled"
       [disabled]="!registrationForm.valid"
+      (click)="onEdit()"
     >
       {{ btnText }}
     </button>
