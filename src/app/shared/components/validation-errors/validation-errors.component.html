@@ -1,0 +1,9 @@
+<div
+  *ngIf="control.invalid && control.touched"
+  class="invalid-feedback"
+  role="alert"
+>
+  <div *ngFor="let error of errors">
+    <p>{{ error }}</p>
+  </div>
+</div>

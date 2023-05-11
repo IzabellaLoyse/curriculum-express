@@ -22,13 +22,14 @@
         id="firstName"
         name="firstName"
         class="form-input form-input--big"
-        [class.form-input--error]="validationForm('firstName')"
-        [class.form-input--success]="correctValidField('firstName')"
+        [appFieldError]="this.registrationForm.get('firstName')!"
+        [class.form-input--error]="this.registrationForm.get('firstName')!"
+        [class.form-input--success]="this.registrationForm.get('firstName')!"
       />
 
-      <span *ngIf="validationForm('firstName')" class="invalid-feedback">
-        Por favor, informe o Nome
-      </span>
+      <app-validation-errors
+        [control]="this.registrationForm.get('firstName')!"
+      ></app-validation-errors>
 
       <div class="form-user__wrapper">
         <span class="span-required">*</span>
@@ -41,13 +42,14 @@
         id="lastName"
         name="lastName"
         class="form-input form-input--big"
-        [class.form-input--error]="validationForm('lastName')"
-        [class.form-input--success]="correctValidField('lastName')"
+        [appFieldError]="this.registrationForm.get('lastName')!"
+        [class.form-input--error]="this.registrationForm.get('lastName')!"
+        [class.form-input--success]="this.registrationForm.get('lastName')!"
       />
 
-      <span *ngIf="validationForm('lastName')" class="invalid-feedback">
-        Por favor, informe o Sobrenome
-      </span>
+      <app-validation-errors
+        [control]="this.registrationForm.get('lastName')!"
+      ></app-validation-errors>
     </section>
 
     <section class="form-user">
@@ -64,13 +66,14 @@
         formControlName="birthDate"
         mask="00/00/0000"
         class="form-input form-input--medium"
-        [class.form-input--error]="validationForm('birthDate')"
-        [class.form-input--success]="correctValidField('birthDate')"
+        [appFieldError]="this.registrationForm.get('birthDate')!"
+        [class.form-input--error]="this.registrationForm.get('birthDate')!"
+        [class.form-input--success]="this.registrationForm.get('birthDate')!"
       />
 
-      <span *ngIf="validationForm('birthDate')" class="invalid-feedback">
-        É necessário informar a Data de Nascimento.
-      </span>
+      <app-validation-errors
+        [control]="this.registrationForm.get('birthDate')!"
+      ></app-validation-errors>
 
       <div class="form-user__wrapper">
         <span class="span-required">*</span>
@@ -85,13 +88,14 @@
         formControlName="phone"
         mask="(00) 0 0000-0000"
         class="form-input form-input--medium"
-        [class.form-input--error]="validationForm('phone')"
-        [class.form-input--success]="correctValidField('phone')"
+        [appFieldError]="this.registrationForm.get('phone')!"
+        [class.form-input--error]="this.registrationForm.get('phone')!"
+        [class.form-input--success]="this.registrationForm.get('phone')!"
       />
 
-      <span *ngIf="validationForm('phone')" class="invalid-feedback">
-        É necessário informar o número do Telefone principal.
-      </span>
+      <app-validation-errors
+        [control]="this.registrationForm.get('phone')!"
+      ></app-validation-errors>
 
       <div class="form-user__wrapper">
         <span class="span-required">*</span>
@@ -103,13 +107,19 @@
         id="gender"
         class="form-input form-input--medium"
         formControlName="gender"
-        [class.form-input--success]="correctValidField('gender')"
+        [appFieldError]="this.registrationForm.get('gender')!"
+        [class.form-input--error]="this.registrationForm.get('gender')!"
+        [class.form-input--success]="this.registrationForm.get('gender')!"
       >
         <option value="" disabled>Gênero</option>
         <option value="feminine">Feminino</option>
         <option value="masculine">Masculino</option>
         <option value="not-inform">Não informar</option>
       </select>
+
+      <app-validation-errors
+        [control]="this.registrationForm.get('gender')!"
+      ></app-validation-errors>
     </section>
 
     <section class="form-user">
@@ -126,21 +136,17 @@
         formControlName="cpf"
         mask="000.000.000-00"
         class="form-input form-input--big"
-        [class.form-input--error]="
-          validationForm('cpf') || validatorLengthField('cpf')
-        "
-        [class.form-input--success]="correctValidField('cpf')"
+        [appFieldError]="this.registrationForm.get('cpf')!"
+        [class.form-input--error]="this.registrationForm.get('cpf')!"
+        [class.form-input--success]="this.registrationForm.get('cpf')!"
       />
-      <div>
-        <span *ngIf="validationForm('cpf')" class="invalid-feedback">
-          É necessário informar um CPF.
-        </span>
 
-        <span class="invalid-feedback" *ngIf="validatorLengthField('cpf')"
-          >O CPF precisa ter 11 dígitos, por exemplo: 123.456.789-10</span
-        >
-      </div>
+      <app-validation-errors
+        [control]="this.registrationForm.get('cpf')!"
+      ></app-validation-errors>
+    </section>
 
+    <section class="form-user">
       <div class="form-user__wrapper">
         <span class="span-required">*</span>
         <label for="email" class="form-label">E-mail</label>
@@ -152,16 +158,14 @@
         id="email"
         name="email"
         class="form-input form-input--big"
-        [class.form-input--error]="validationForm('email')"
-        [class.form-input--success]="correctValidField('email')"
+        [appFieldError]="this.registrationForm.get('email')!"
+        [class.form-input--error]="this.registrationForm.get('email')!"
+        [class.form-input--success]="this.registrationForm.get('email')!"
       />
-      <span class="invalid-feedback" *ngIf="validationForm('email')">
-        É necessário informar um E-mail.
-      </span>
 
-      <span *ngIf="validationEmail()" class="invalid-feedback">
-        E-mail incompleto
-      </span>
+      <app-validation-errors
+        [control]="this.registrationForm.get('email')!"
+      ></app-validation-errors>
     </section>
 
     <section formGroupName="address">
@@ -183,12 +187,18 @@
             mask="00000-000"
             class="form-input form-input--medium"
             (blur)="onChangeAddress()"
-            [class.form-input--error]="validationForm('address.cep')"
-            [class.form-input--success]="correctValidField('address.cep')"
+            [appFieldError]="this.registrationForm.get('address.cep')!"
+            [class.form-input--error]="
+              this.registrationForm.get('address.cep')!
+            "
+            [class.form-input--success]="
+              this.registrationForm.get('address.cep')!
+            "
           />
-          <span *ngIf="validationForm('address.cep')" class="invalid-feedback">
-            É necessário informar um CEP.
-          </span>
+
+          <app-validation-errors
+            [control]="this.registrationForm.get('address.cep')!"
+          ></app-validation-errors>
         </section>
       </div>
 
@@ -205,18 +215,18 @@
             name="street"
             formControlName="logradouro"
             class="form-input form-input--big"
-            [class.form-input--error]="validationForm('address.logradouro')"
+            [appFieldError]="this.registrationForm.get('address.logradouro')!"
+            [class.form-input--error]="
+              this.registrationForm.get('address.logradouro')!
+            "
             [class.form-input--success]="
-              correctValidField('address.logradouro')
+              this.registrationForm.get('address.logradouro')!
             "
           />
 
-          <span
-            *ngIf="validationForm('address.logradouro')"
-            class="invalid-feedback"
-          >
-            O É necessário informar um Logradouro.
-          </span>
+          <app-validation-errors
+            [control]="this.registrationForm.get('address.logradouro')!"
+          ></app-validation-errors>
 
           <div class="form-user__wrapper">
             <span class="span-required">*</span>
@@ -229,17 +239,18 @@
             name="complement"
             formControlName="complemento"
             class="form-input form-input--big"
-            [class.form-input--error]="validationForm('address.complemento')"
+            [appFieldError]="this.registrationForm.get('address.complemento')!"
+            [class.form-input--error]="
+              this.registrationForm.get('address.complemento')!
+            "
             [class.form-input--success]="
-              correctValidField('address.complemento')
+              this.registrationForm.get('address.complemento')!
             "
           />
-          <span
-            *ngIf="validationForm('address.complemento')"
-            class="invalid-feedback"
-          >
-            É necessário informar um complemento.
-          </span>
+
+          <app-validation-errors
+            [control]="this.registrationForm.get('address.complemento')!"
+          ></app-validation-errors>
         </section>
 
         <section class="form-user">
@@ -254,16 +265,18 @@
             name="neighborhood"
             formControlName="bairro"
             class="form-input form-input--big"
-            [class.form-input--error]="validationForm('address.bairro')"
-            [class.form-input--success]="correctValidField('address.bairro')"
+            [appFieldError]="this.registrationForm.get('address.bairro')!"
+            [class.form-input--error]="
+              this.registrationForm.get('address.bairro')!
+            "
+            [class.form-input--success]="
+              this.registrationForm.get('address.bairro')!
+            "
           />
 
-          <span
-            *ngIf="validationForm('address.bairro')"
-            class="invalid-feedback"
-          >
-            É necessário informar um Bairro.
-          </span>
+          <app-validation-errors
+            [control]="this.registrationForm.get('address.bairro')!"
+          ></app-validation-errors>
 
           <div class="form-user__wrapper">
             <span class="span-required">*</span>
@@ -276,15 +289,18 @@
             name="number"
             formControlName="numero"
             class="form-input form-input--medium"
-            [class.form-input--error]="validationForm('address.numero')"
-            [class.form-input--success]="correctValidField('address.numero')"
+            [appFieldError]="this.registrationForm.get('address.numero')!"
+            [class.form-input--error]="
+              this.registrationForm.get('address.numero')!
+            "
+            [class.form-input--success]="
+              this.registrationForm.get('address.numero')!
+            "
           />
-          <span
-            *ngIf="validationForm('address.numero')"
-            class="invalid-feedback"
-          >
-            É necessário informar um Número.
-          </span>
+
+          <app-validation-errors
+            [control]="this.registrationForm.get('address.bairro')!"
+          ></app-validation-errors>
         </section>
 
         <section class="form-user">
@@ -298,18 +314,18 @@
             name="city"
             formControlName="localidade"
             class="form-input form-input--big"
-            [class.form-input--error]="validationForm('address.localidade')"
+            [appFieldError]="this.registrationForm.get('address.localidade')!"
+            [class.form-input--error]="
+              this.registrationForm.get('address.localidade')!
+            "
             [class.form-input--success]="
-              correctValidField('address.localidade')
+              this.registrationForm.get('address.localidade')!
             "
           />
 
-          <span
-            *ngIf="validationForm('address.localidade')"
-            class="invalid-feedback"
-          >
-            É necessário informar uma Cidade.
-          </span>
+          <app-validation-errors
+            [control]="this.registrationForm.get('address.localidade')!"
+          ></app-validation-errors>
 
           <div class="form-user__wrapper">
             <span class="span-required">*</span>
@@ -323,21 +339,16 @@
             formControlName="uf"
             placeholder="Ex: SP"
             class="form-input form-input--medium"
-            [class.form-input--error]="
-              validationForm('address.uf') || validatorLengthField('address.uf')
+            [appFieldError]="this.registrationForm.get('address.uf')!"
+            [class.form-input--error]="this.registrationForm.get('address.uf')!"
+            [class.form-input--success]="
+              this.registrationForm.get('address.uf')!
             "
-            [class.form-input--success]="correctValidField('address.uf')"
           />
-          <span class="invalid-feedback" *ngIf="validationForm('address.uf')">
-            É necessário informar um Estado.
-          </span>
 
-          <span
-            class="invalid-feedback"
-            *ngIf="validatorLengthField('address.uf')"
-          >
-            O campo Estado deve ter no máximo 2 caracteres
-          </span>
+          <app-validation-errors
+            [control]="this.registrationForm.get('address.uf')!"
+          ></app-validation-errors>
         </section>
       </section>
     </section>
@@ -356,13 +367,17 @@
           id="experiences"
           formControlName="experiences"
           class="form-input form-input--extra-big"
-          [class.form-input--error]="validationForm('experiences')"
-          [class.form-input--success]="correctValidField('experiences')"
+          [appFieldError]="this.registrationForm.get('experiences')!"
+          [class.form-input--error]="this.registrationForm.get('experiences')!"
+          [class.form-input--success]="
+            this.registrationForm.get('experiences')!
+          "
         >
         </textarea>
-        <span *ngIf="validationForm('experiences')" class="invalid-feedback">
-          É necessário informar uma Experiência.
-        </span>
+
+        <app-validation-errors
+          [control]="this.registrationForm.get('experiences')!"
+        ></app-validation-errors>
       </section>
     </section>
 

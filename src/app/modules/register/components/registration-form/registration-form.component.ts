@@ -127,40 +127,6 @@ export class RegistrationFormComponent implements OnInit, OnDestroy {
       });
   }
 
-  public validationForm(input: string) {
-    return (
-      !this.registrationForm.get(input)?.valid &&
-      this.registrationForm.get(input)?.touched &&
-      this.registrationForm.get(input)?.errors?.['required']
-    );
-  }
-
-  validationEmail() {
-    let inputEmail = this.registrationForm.get('email');
-
-    if (inputEmail?.errors) {
-      return inputEmail?.errors?.['email'] && inputEmail?.touched;
-    }
-  }
-
-  validatorLengthField(input: string) {
-    let field = this.registrationForm.get(input);
-
-    if (field?.errors?.['maxlength']) {
-      return field?.errors?.['maxlength'] && field?.touched;
-    }
-
-    return field?.errors?.['minlength'] && field?.touched;
-  }
-
-  correctValidField(input: string) {
-    let field = this.registrationForm.get(input);
-
-    if (field?.valid) {
-      return field?.value;
-    }
-  }
-
   public onReset() {
     this.registrationForm.reset();
   }

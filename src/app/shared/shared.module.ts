@@ -11,13 +11,19 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { GenderTranslationPipe } from './pipes/gender-translation.pipe';
 
 import { HttpClientModule } from '@angular/common/http';
+import { ValidationErrorsComponent } from './components/validation-errors/validation-errors.component';
+import { FieldErrorDirective } from './directives/field-error.directive';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
 }
 
 @NgModule({
-  declarations: [GenderTranslationPipe],
+  declarations: [
+    GenderTranslationPipe,
+    FieldErrorDirective,
+    ValidationErrorsComponent,
+  ],
   imports: [
     CommonModule,
     HttpClientModule,
@@ -30,6 +36,10 @@ export function HttpLoaderFactory(http: HttpClient) {
     }),
   ],
   providers: [TranslateService, TranslateStore],
-  exports: [GenderTranslationPipe],
+  exports: [
+    GenderTranslationPipe,
+    FieldErrorDirective,
+    ValidationErrorsComponent,
+  ],
 })
 export class SharedModule {}
